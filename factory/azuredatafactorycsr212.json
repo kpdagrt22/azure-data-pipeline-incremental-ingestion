@@ -1,0 +1,9 @@
+{
+	"name": "azuredatafactorycsr212",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "032e1022-fec1-40d0-90a9-9bf78d24edc4",
+		"tenantId": "6a960903-8598-468b-9151-2b1e80a6de6e"
+	}
+}
