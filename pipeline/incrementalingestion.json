@@ -61,7 +61,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "SELECT COUNT(*) as total_count\nFROM @{pipeline().parameters.schema}.@{pipeline().parameters.table}\nWHERE last_updated > '@{activity('copycdc').output.value[0].cdc_timestamp}'",
+								"value": "SELECT COUNT(*) AS total_count\nFROM @{pipeline().parameters.schema}.@{pipeline().parameters.table}\nWHERE last_updated > '@{if(empty(pipeline().parameters.backdate), activity('copycdc').output.value[0].cdc_timestamp, pipeline().parameters.backdate)}'",
 								"type": "Expression"
 							}
 						}
@@ -103,7 +103,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "SELECT *\nFROM @{pipeline().parameters.schema}.@{pipeline().parameters.table}\nWHERE last_updated > '@{activity('copycdc').output.value[0].cdc_timestamp}'",
+										"value": "SELECT *\nFROM @{pipeline().parameters.schema}.@{pipeline().parameters.table}\nWHERE last_updated > '@{if(empty(pipeline().parameters.backdate), activity('copycdc').output.value[0].cdc_timestamp, pipeline().parameters.backdate)}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -250,6 +250,9 @@
 				"type": "string"
 			},
 			"table": {
+				"type": "string"
+			},
+			"backdate": {
 				"type": "string"
 			}
 		},
